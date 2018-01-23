@@ -7,12 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using System.Net;
+using System.Net.Sockets;
+using System.Threading;
 
 namespace HeyMessenger
 {
-    public partial class Form1 : Form
+    public partial class formChat : Form
     {
-        public Form1()
+        public formChat()
         {
             InitializeComponent();
         }
