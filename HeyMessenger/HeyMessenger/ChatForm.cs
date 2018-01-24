@@ -19,6 +19,11 @@ namespace HeyMessenger
         public formChat()
         {
             InitializeComponent();
+
+            //Client clientSocket = new Client();
+            
+            //clientSocket.ConnectSocket();
         }
+
     }
 }

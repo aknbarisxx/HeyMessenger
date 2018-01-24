@@ -14,6 +14,7 @@ namespace HeyMessenger
     {
 
         public IPEndPoint EndPoint { get; private set; }
+
         public Guid ID { get; set; }
 
         public Thread ReceiveThread { get; private set; }
@@ -26,7 +27,7 @@ namespace HeyMessenger
 
         public string Name { get; private set; }
 
-        public Client(TcpClient client, formChat chat)
+        public Client()//TcpClient client, formChat chat)
         {
             EndPoint = EndPoint;
         }
@@ -39,6 +40,18 @@ namespace HeyMessenger
             // ReceiveThread = new Thread(Receive);
             //ReceiveThread.IsBackground = true;
             //ReceiveThread.Start();
+        }
+
+        /// <summary>
+        /// Ein Socket wird erstellt und versucht eine Verbindung herzustelllen VERSUCH
+        /// </summary>
+        public void ConnectSocket()
+        {
+            //IPAddress address = IPAddress.Parse("127.0.0.1");
+            //IPEndPoint EndPointSocket = new IPEndPoint(address, 3443);
+
+            //Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            //socket.Connect(EndPointSocket);
         }
 
         public void Close()
