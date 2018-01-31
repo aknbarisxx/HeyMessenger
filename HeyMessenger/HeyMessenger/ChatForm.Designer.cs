@@ -41,6 +41,7 @@
             textBoxMessage.Name = "textBoxMessage";
             textBoxMessage.Size = new System.Drawing.Size(332, 20);
             textBoxMessage.TabIndex = 0;
+            textBoxMessage.TextChanged += new System.EventHandler(this.textBoxMessage_TextChanged);
             // 
             // labelChat
             // 
@@ -60,6 +61,7 @@
             this.buttonSend.TabIndex = 2;
             this.buttonSend.Text = "Senden";
             this.buttonSend.UseVisualStyleBackColor = true;
+            this.buttonSend.Click += new System.EventHandler(this.buttonSend_Click);
             // 
             // labelChatTitle
             // 

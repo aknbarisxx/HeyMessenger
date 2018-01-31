@@ -23,10 +23,6 @@ namespace HeyMessenger
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new formChat());
 
-            //Client clientSocket = new Client(); 
-
-            //clientSocket.ConnectSocket();
-
         }
 
     }

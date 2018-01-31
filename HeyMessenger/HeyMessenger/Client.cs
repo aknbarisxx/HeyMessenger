@@ -27,9 +27,11 @@ namespace HeyMessenger
 
         public string Name { get; private set; }
 
-        public Client()//TcpClient client, formChat chat)
+        public Client(TcpClient client, formChat chat)
         {
             EndPoint = EndPoint;
+            ChatClient = client;
+            this.ChatClient = ChatClient;
         }
 
         public void Connect()
@@ -56,10 +58,18 @@ namespace HeyMessenger
 
         public void Close()
         {
+            //ReceiveThread.Abort();
+            //Writer.Close();
+            //Reader.Close();
 
         }
 
         public void Write()
+        {
+
+        }
+
+        private void Receive()
         {
 
         }
