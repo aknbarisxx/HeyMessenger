@@ -28,20 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TextBox textBoxMessage;
+
             this.labelChat = new System.Windows.Forms.Label();
             this.buttonSend = new System.Windows.Forms.Button();
             this.labelChatTitle = new System.Windows.Forms.Label();
-            textBoxMessage = new System.Windows.Forms.TextBox();
+            this.textBoxMessage = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
-            // 
-            // textBoxMessage
-            // 
-            textBoxMessage.Location = new System.Drawing.Point(12, 343);
-            textBoxMessage.Name = "textBoxMessage";
-            textBoxMessage.Size = new System.Drawing.Size(332, 20);
-            textBoxMessage.TabIndex = 0;
-            textBoxMessage.TextChanged += new System.EventHandler(this.textBoxMessage_TextChanged);
             // 
             // labelChat
             // 
@@ -50,7 +42,6 @@
             this.labelChat.Name = "labelChat";
             this.labelChat.Size = new System.Drawing.Size(501, 290);
             this.labelChat.TabIndex = 1;
-            this.labelChat.Text = "Chat";
             // 
             // buttonSend
             // 
@@ -73,6 +64,14 @@
             this.labelChatTitle.TabIndex = 3;
             this.labelChatTitle.Text = "Chat:";
             // 
+            // textBoxMessage
+            // 
+            textBoxMessage.Location = new System.Drawing.Point(12, 343);
+            textBoxMessage.Name = "textBoxMessage";
+            textBoxMessage.Size = new System.Drawing.Size(332, 20);
+            textBoxMessage.TabIndex = 0;
+            textBoxMessage.TextChanged += new System.EventHandler(this.textBoxMessage_TextChanged);
+            // 
             // formChat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -92,7 +91,7 @@
         }
 
         #endregion
-
+        private System.Windows.Forms.TextBox textBoxMessage;
         private System.Windows.Forms.Label labelChat;
         private System.Windows.Forms.Button buttonSend;
         private System.Windows.Forms.Label labelChatTitle;

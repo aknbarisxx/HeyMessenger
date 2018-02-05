@@ -23,28 +23,29 @@ namespace HeyMessenger
         public formChat()
         {
             InitializeComponent();
-
-            //Client clientSocket = new Client();
-            
-            //clientSocket.ConnectSocket();
         }
 
         private void buttonSend_Click(object sender, EventArgs e)
         {
+
+            labelChat.Text += textBoxMessage.Text + "\n";
 
             //Split
             string privateMsg = "Das ist eine Private Nachricht"; // 192.168.2.126
             privateMsg = "pm[!]192.168.2.126[!]" + privateMsg;
             byte[] pBytes = Encoding.ASCII.GetBytes(privateMsg);
 
-            string bMsg = "Das ist eine Broadcast Nachricht";
-            bMsg = "bc[!]" + bMsg;
-            byte[] bBytes = Encoding.ASCII.GetBytes(bMsg);
+
+
+            //string bMsg = "Das ist eine Broadcast Nachricht";
+            //bMsg = "bc[!]" + bMsg;
+            //byte[] bBytes = Encoding.ASCII.GetBytes(bMsg);
 
             //Write Message
+           // try 
+           // {
             TcpClient client = new TcpClient(serverIP, port);
-
-            int byteCount = Encoding.ASCII.GetByteCount(textBoxMessage.Text);  //textBoxMessage.Text ? / message.Text
+            int byteCount = Encoding.ASCII.GetByteCount(textBoxMessage.Text);
             byte[] sendData = new byte[byteCount];
 
             sendData = Encoding.ASCII.GetBytes(textBoxMessage.Text);
@@ -52,13 +53,35 @@ namespace HeyMessenger
 
             NetworkStream stream = client.GetStream();
 
+            stream.Write(pBytes, 0, sendData.Length); // eigene IP-Adresse wird gesendet
+
             stream.Write(sendData, 0, sendData.Length);
             stream.Flush();
 
-            // Read Message
+
+
+
+
+
+            stream.Close();
+            client.Close();
+
+          //  }
+
+
+            //  catch(Exception ex)
+            //{
+            //    MessageBox.Show("Fehler beim Verbindungsaufbau");
+            //}
+
+            //Read Message
+
             int length = stream.ReadByte();
             byte[] readData = new byte[length];
             stream.Read(readData, 0, length);
+
+
+            
 
             // Split Message
             string sData = Encoding.ASCII.GetString(readData);
@@ -77,5 +100,6 @@ namespace HeyMessenger
         {
 
         }
+        
     }
 }
