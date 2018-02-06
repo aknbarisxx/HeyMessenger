@@ -19,6 +19,8 @@ namespace HeyMessenger
 
         string serverIP = "127.0.0.1";
         int port = 4334;
+        string benutzer;
+        bool connection;
 
         public formChat()
         {
@@ -28,7 +30,7 @@ namespace HeyMessenger
         private void buttonSend_Click(object sender, EventArgs e)
         {
 
-            labelChat.Text += textBoxMessage.Text + "\n";
+            labelChat.Text += benutzer + ": " + textBoxMessage.Text + "\n";
 
             //Split
             string privateMsg = "Das ist eine Private Nachricht"; // 192.168.2.126
@@ -42,9 +44,11 @@ namespace HeyMessenger
             //byte[] bBytes = Encoding.ASCII.GetBytes(bMsg);
 
             //Write Message
-           // try 
-           // {
-            TcpClient client = new TcpClient(serverIP, port);
+            TcpClient client = new TcpClient();//serverIP, port);
+
+            Connect(client); // Verbindungsaufbau
+
+
             int byteCount = Encoding.ASCII.GetByteCount(textBoxMessage.Text);
             byte[] sendData = new byte[byteCount];
 
@@ -53,29 +57,18 @@ namespace HeyMessenger
 
             NetworkStream stream = client.GetStream();
 
-            stream.Write(pBytes, 0, sendData.Length); // eigene IP-Adresse wird gesendet
+            stream.Write(pBytes, 0, pBytes.Length); // eigene IP-Adresse wird gesendet
+
 
             stream.Write(sendData, 0, sendData.Length);
             stream.Flush();
 
 
 
-
-
-
             stream.Close();
             client.Close();
 
-          //  }
-
-
-            //  catch(Exception ex)
-            //{
-            //    MessageBox.Show("Fehler beim Verbindungsaufbau");
-            //}
-
             //Read Message
-
             int length = stream.ReadByte();
             byte[] readData = new byte[length];
             stream.Read(readData, 0, length);
@@ -84,11 +77,11 @@ namespace HeyMessenger
             
 
             // Split Message
-            string sData = Encoding.ASCII.GetString(readData);
-            if (sData.Split(new string[] { "[;]" }, StringSplitOptions.None)[0].ToLower() == "pm")
-            {
+            //string sData = Encoding.ASCII.GetString(readData);
+            //if (sData.Split(new string[] { "[;]" }, StringSplitOptions.None)[0].ToLower() == "pm")
+            //{
 
-            }
+            //}
 
 
             stream.Close();
@@ -96,9 +89,38 @@ namespace HeyMessenger
 
         }
 
+        private void Connect(TcpClient client)
+        {
+            do
+            {
+                try
+                {
+                    Thread.Sleep(30000);
+                    client.Connect(serverIP, port);
+                    MessageBox.Show("Verbindungsaufbau erfolgreich");
+                }
+
+                catch (Exception)
+                {
+                    MessageBox.Show("Verbindungsaufbau fehlgeschlagen");
+                    connection = false;
+                }
+
+            } 
+            while (connection == false);
+
+
+        }
+
         private void textBoxMessage_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void buttonBenutzer_Click(object sender, EventArgs e)
+        {
+            benutzer = textBoxBenutzer.Text;
+            textBoxBenutzer.Text = "";
         }
         
     }
