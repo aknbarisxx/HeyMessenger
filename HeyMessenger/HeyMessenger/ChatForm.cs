@@ -16,8 +16,7 @@ namespace HeyMessenger
 {
     public partial class formChat : Form
     {
-
-        string serverIP = "127.0.0.1";
+        string serverIP = "127.0.0.1";  // TO DO: Konfigurationsdatei
         int port = 4334;
         string benutzer;
         bool connection;
@@ -25,29 +24,31 @@ namespace HeyMessenger
         public formChat()
         {
             InitializeComponent();
+            //TcpClient client = new TcpClient(); //  not done
+            //NetworkStream stream = client.GetStream(); //  not done
+            // Connect(client); // Verbindungsaufbau vor dem ChatForm start
         }
 
+        /// <summary>
+        /// Send the data on the stream
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonSend_Click(object sender, EventArgs e)
         {
-
             labelChat.Text += benutzer + ": " + textBoxMessage.Text + "\n";
 
-            //Split
-            string privateMsg = "Das ist eine Private Nachricht"; // 192.168.2.126
-            privateMsg = "pm[!]192.168.2.126[!]" + privateMsg;
+
+            //IPAddress ip = Dns.GetHostEntry("localhost").AddressList[0];
+
+            string privateMsg = "192.168.2.126";    // eigene IP-Adresse unklar
             byte[] pBytes = Encoding.ASCII.GetBytes(privateMsg);
 
 
-
-            //string bMsg = "Das ist eine Broadcast Nachricht";
-            //bMsg = "bc[!]" + bMsg;
-            //byte[] bBytes = Encoding.ASCII.GetBytes(bMsg);
-
             //Write Message
-            TcpClient client = new TcpClient();//serverIP, port);
+            TcpClient client = new TcpClient(); //  not done
 
             Connect(client); // Verbindungsaufbau
-
 
             int byteCount = Encoding.ASCII.GetByteCount(textBoxMessage.Text);
             byte[] sendData = new byte[byteCount];
@@ -55,47 +56,50 @@ namespace HeyMessenger
             sendData = Encoding.ASCII.GetBytes(textBoxMessage.Text);
 
 
-            NetworkStream stream = client.GetStream();
+            NetworkStream stream = client.GetStream(); //  not done
 
             stream.Write(pBytes, 0, pBytes.Length); // eigene IP-Adresse wird gesendet
 
-
+            // TO DO: be able to choose a client in the same network, send again if error accrued
             stream.Write(sendData, 0, sendData.Length);
             stream.Flush();
 
 
-
-            stream.Close();
-            client.Close();
-
-            //Read Message
-            int length = stream.ReadByte();
-            byte[] readData = new byte[length];
-            stream.Read(readData, 0, length);
-
-
-            
-
-            // Split Message
-            //string sData = Encoding.ASCII.GetString(readData);
-            //if (sData.Split(new string[] { "[;]" }, StringSplitOptions.None)[0].ToLower() == "pm")
-            //{
-
-            //}
-
-
-            stream.Close();
-            client.Close();
-
+            stream.Close();    
+            client.Close();     
         }
 
+        /// <summary>
+        ///  Working on accepting another client/server connection
+        /// </summary>
+        /// <param name="listener"></param>
+        private void AcceptConnection(TcpListener listener)
+        {
+            //do
+            //{
+
+            // tcpListener listener = new TcpListener(ip, 4334);
+            // listener.Start();
+
+            // TcpClient foreignClient = TcpListener.AcceptTcpClient();
+
+            // foreignClient.Close();
+            // listener.Stop(); 
+
+            //} while (true);
+        }
+
+        /// <summary>
+        /// trys to connect with the server (error message if not connected properly) and trys it after a period of time again
+        /// </summary>
+        /// <param name="client"></param>
         private void Connect(TcpClient client)
         {
             do
             {
                 try
                 {
-                    Thread.Sleep(30000);
+                   // Thread.Sleep(30000);
                     client.Connect(serverIP, port);
                     MessageBox.Show("Verbindungsaufbau erfolgreich");
                 }
@@ -108,20 +112,47 @@ namespace HeyMessenger
 
             } 
             while (connection == false);
-
-
         }
 
         private void textBoxMessage_TextChanged(object sender, EventArgs e)
-        {
+        {}
 
-        }
-
+        /// <summary>
+        /// the name of the user will be saved in benutzer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonBenutzer_Click(object sender, EventArgs e)
         {
-            benutzer = textBoxBenutzer.Text;
-            textBoxBenutzer.Text = "";
+            benutzer = textBoxUser.Text;
+            textBoxUser.Text = "";
         }
-        
+
+        private void formChat_Load(object sender, EventArgs e)
+        {}
+
+        /// <summary>
+        /// shows the incoming message on the label and shows a messagebox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonRefresh_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                TcpClient client = new TcpClient();             //  not done
+                NetworkStream stream = client.GetStream();      //  not done
+                MessageBox.Show("Eingehende Nachricht");
+
+                int length = stream.ReadByte();
+                byte[] readData = new byte[length];
+                stream.Read(readData, 0, length);
+
+                labelChat.Text += stream.ReadByte();    // not sure if it will work
+            }
+            catch (Exception)
+            {}
+
+        }
     }
 }
