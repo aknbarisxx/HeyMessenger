@@ -27,9 +27,8 @@ namespace Server
             }
             catch(Exception ex)
             {
-                //Console.WriteLine(ex.ToString());
-                //Console.Read();
-                throw;
+                Console.WriteLine(ex.ToString());
+                Console.Read();
             }
             while(true)
             {
@@ -40,10 +39,18 @@ namespace Server
 
                 stream.Read(receivedBuffer, 0, receivedBuffer.Length);
 
-                string msg = Encoding.ASCII.GetString(receivedBuffer, 0, receivedBuffer.Length);  //Konvertierung Bytes zu String
+                StringBuilder msg = new StringBuilder();
 
-                Console.WriteLine(msg + receivedBuffer.Length);
-                Console.Read();
+                foreach (byte b in receivedBuffer)
+                {
+                    if (b.Equals(59))
+                    {
+                        break;
+                    }
+                    else
+                        msg.Append(Convert.ToChar(b).ToString());
+                }
+                Console.WriteLine(msg.ToString()+ receivedBuffer.Length);
                 
             }
         }
