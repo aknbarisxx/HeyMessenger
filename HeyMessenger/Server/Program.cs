@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 
 
 namespace Server
@@ -19,6 +20,7 @@ namespace Server
 
             try
             {
+                //Thread.Sleep(30000);
                 server.Start();
                 Console.WriteLine("Server gestartet...");
                 Console.Read();
