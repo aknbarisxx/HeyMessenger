@@ -15,7 +15,7 @@ namespace Server
         static void Main(string[] args)
         {
             IPAddress ip = Dns.GetHostEntry("localhost").AddressList[0];
-            TcpListener server = new TcpListener(ip, 8888);
+            TcpListener server = new TcpListener(ip, 4334);
             TcpClient client = default(TcpClient);
 
             try
