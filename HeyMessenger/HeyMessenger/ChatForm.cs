@@ -46,7 +46,7 @@ namespace HeyMessenger
 
 
             //Write Message
-            TcpClient client = new TcpClient(serverIP, port); //  not done
+            TcpClient client = new TcpClient(serverIP, port);
 
             Connect(client); // Verbindungsaufbau
 
@@ -88,6 +88,33 @@ namespace HeyMessenger
 
             //} while (true);
         }
+
+        /// <summary>
+        /// Read text file
+        /// </summary>
+        //private void Reader()
+        //{
+        //    try
+        //    {
+        //        using (StreamReader sr = new StreamReader("ServerIPAddress.txt")) ;
+        //        {
+        //            string line;
+
+        //            while ((line = sr.Readline()) != null)
+        //            {
+        //                sr.Readline();
+        //            }
+
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        MessageBox.Show("Error with reading the text file");
+        //    }
+
+        //}
+
+
 
         /// <summary>
         /// trys to connect with the server (error message if not connected properly) and trys it after a period of time again
