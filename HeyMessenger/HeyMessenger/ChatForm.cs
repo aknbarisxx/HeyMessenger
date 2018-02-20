@@ -17,7 +17,7 @@ namespace HeyMessenger
     public partial class formChat : Form
     {
         string serverIP = "127.0.0.1";  // TO DO: Konfigurationsdatei
-        int port = 4334;
+        int port = 8334;
         string benutzer;
         bool connection;
 
@@ -46,7 +46,7 @@ namespace HeyMessenger
 
 
             //Write Message
-            TcpClient client = new TcpClient(); //  not done
+            TcpClient client = new TcpClient(serverIP, port); //  not done
 
             Connect(client); // Verbindungsaufbau
 
@@ -99,7 +99,7 @@ namespace HeyMessenger
             {
                 try
                 {
-                   // Thread.Sleep(30000);
+                    Thread.Sleep(20000);
                     client.Connect(serverIP, port);
                     MessageBox.Show("Verbindungsaufbau erfolgreich");
                 }
