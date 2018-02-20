@@ -15,7 +15,7 @@ namespace Server
         static void Main(string[] args)
         {
             IPAddress ip = Dns.GetHostEntry("localhost").AddressList[0];
-            TcpListener server = new TcpListener(ip, 4334);
+            TcpListener server = new TcpListener(IPAddress.Loopback, 4334);
             TcpClient client = default(TcpClient);
 
             try
@@ -23,12 +23,12 @@ namespace Server
                 //Thread.Sleep(30000);
                 server.Start();
                 Console.WriteLine("Server gestartet...");
-                Console.Read();
+                //Console.Read();
             }
             catch(Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                Console.Read();
+               // Console.Read();
             }
             while(true)
             {

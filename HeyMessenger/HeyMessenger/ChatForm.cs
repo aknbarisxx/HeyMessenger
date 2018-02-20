@@ -46,7 +46,7 @@ namespace HeyMessenger
 
 
             //Write Message
-            TcpClient client = new TcpClient(serverIP, port); //  not done
+            TcpClient client = new TcpClient(); //  not done
 
             Connect(client); // Verbindungsaufbau
 
@@ -99,12 +99,12 @@ namespace HeyMessenger
             {
                 try
                 {
-                   // Thread.Sleep(30000);
-                    client.Connect(serverIP, port);
+                   // Thread.Sleep(30000);          
+                    client.Connect(IPAddress.Loopback, port);
                     MessageBox.Show("Verbindungsaufbau erfolgreich");
                 }
 
-                catch (Exception)
+                catch (Exception ex)
                 {
                     MessageBox.Show("Verbindungsaufbau fehlgeschlagen");
                     connection = false;
