@@ -46,7 +46,7 @@ namespace HeyMessenger
 
 
             //Write Message
-            TcpClient client = new TcpClient(); //  not done
+            TcpClient client = new TcpClient(serverIP, port); //  not done
 
             Connect(client); // Verbindungsaufbau
 
