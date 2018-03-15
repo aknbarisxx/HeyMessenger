@@ -16,17 +16,15 @@ namespace HeyMessenger
 {
     public partial class formChat : Form
     {
-        string serverIP = "127.0.0.1";  // TO DO: Konfigurationsdatei
-        int port = 8334;
+      //  string serverIP = "127.0.0.1";
+        int port = 4334;
         string benutzer;
         bool connection;
+      //  string clientIP = "localhost";
 
         public formChat()
         {
             InitializeComponent();
-            //TcpClient client = new TcpClient(); //  not done
-            //NetworkStream stream = client.GetStream(); //  not done
-            // Connect(client); // Verbindungsaufbau vor dem ChatForm start
         }
 
         /// <summary>
@@ -36,17 +34,22 @@ namespace HeyMessenger
         /// <param name="e"></param>
         private void buttonSend_Click(object sender, EventArgs e)
         {
+            //if (benutzer == null)
+            //{
+            //    MessageBox.Show("Bitte einen Benutzer eingeben! Es wird ein Ersatznamen benutzt");
+            //    benutzer = "John Doe";
+            //}
+
             labelChat.Text += benutzer + ": " + textBoxMessage.Text + "\n";
 
 
-            //IPAddress ip = Dns.GetHostEntry("localhost").AddressList[0];
 
             string privateMsg = "192.168.2.126";    // eigene IP-Adresse unklar
             byte[] pBytes = Encoding.ASCII.GetBytes(privateMsg);
 
 
             //Write Message
-            TcpClient client = new TcpClient(serverIP, port);
+            TcpClient client = new TcpClient();
 
             Connect(client); // Verbindungsaufbau
 
@@ -55,15 +58,12 @@ namespace HeyMessenger
 
             sendData = Encoding.ASCII.GetBytes(textBoxMessage.Text);
 
-
-            NetworkStream stream = client.GetStream(); //  not done
+            NetworkStream stream = client.GetStream();
 
             stream.Write(pBytes, 0, pBytes.Length); // eigene IP-Adresse wird gesendet
 
-            // TO DO: be able to choose a client in the same network, send again if error accrued
             stream.Write(sendData, 0, sendData.Length);
             stream.Flush();
-
 
             stream.Close();    
             client.Close();     
@@ -78,13 +78,13 @@ namespace HeyMessenger
             //do
             //{
 
-            // tcpListener listener = new TcpListener(ip, 4334);
-            // listener.Start();
+            //    TcpListener ClientListener = new TcpListener(clientIP, 4334);
+            //    ClientListener.Start();
 
-            // TcpClient foreignClient = TcpListener.AcceptTcpClient();
+            //    TcpClient foreignClient = ClientListener.AcceptTcpClient();
 
-            // foreignClient.Close();
-            // listener.Stop(); 
+            //    foreignClient.Close();
+            //    listener.Stop();
 
             //} while (true);
         }
@@ -117,7 +117,7 @@ namespace HeyMessenger
 
 
         /// <summary>
-        /// trys to connect with the server (error message if not connected properly) and trys it after a period of time again
+        /// Tries to connect with the server (error message if not connected properly) and tries it after a period of time again
         /// </summary>
         /// <param name="client"></param>
         private void Connect(TcpClient client)
@@ -126,8 +126,8 @@ namespace HeyMessenger
             {
                 try
                 {
-                    Thread.Sleep(20000);
-                    client.Connect(serverIP, port);
+                    Thread.Sleep(30000);
+                    client.Connect(IPAddress.Loopback, port);
                     MessageBox.Show("Verbindungsaufbau erfolgreich");
                 }
 
@@ -137,7 +137,7 @@ namespace HeyMessenger
                     connection = false;
                 }
 
-            } 
+            }
             while (connection == false);
         }
 
@@ -145,7 +145,7 @@ namespace HeyMessenger
         {}
 
         /// <summary>
-        /// the name of the user will be saved in benutzer
+        /// The name of the user will be saved in benutzer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -159,7 +159,7 @@ namespace HeyMessenger
         {}
 
         /// <summary>
-        /// shows the incoming message on the label and shows a messagebox
+        /// Shows the incoming message on the label
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -167,15 +167,17 @@ namespace HeyMessenger
         {
             try
             {
-                TcpClient client = new TcpClient();             //  not done
-                NetworkStream stream = client.GetStream();      //  not done
-                MessageBox.Show("Eingehende Nachricht");
+                string benutzer2 = "Client";    // anderer Client
+
+                TcpClient client = new TcpClient(); 
+                NetworkStream stream = client.GetStream(); 
 
                 int length = stream.ReadByte();
                 byte[] readData = new byte[length];
                 stream.Read(readData, 0, length);
 
-                labelChat.Text += stream.ReadByte();    // not sure if it will work
+                labelChat.Text += benutzer2 + ":" + stream.ReadByte();
+
             }
             catch (Exception)
             {}
