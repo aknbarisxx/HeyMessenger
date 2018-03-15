@@ -92,27 +92,27 @@ namespace HeyMessenger
         /// <summary>
         /// Read text file
         /// </summary>
-        //private void Reader()
-        //{
-        //    try
-        //    {
-        //        using (StreamReader sr = new StreamReader("ServerIPAddress.txt")) ;
-        //        {
-        //            string line;
+        private void Reader()
+        {
+            //    try
+            //    {
+            //        using (StreamReader sr = new StreamReader("ServerIPAddress.txt")) ;
+            //        {
+            //            string line;
 
-        //            while ((line = sr.Readline()) != null)
-        //            {
-        //                sr.Readline();
-        //            }
+            //            while ((line = sr.Readline()) != null)
+            //            {
+            //                sr.Readline();
+            //            }
 
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        MessageBox.Show("Error with reading the text file");
-        //    }
+            //        }
+            //    }
+            //    catch (Exception)
+            //    {
+            //        MessageBox.Show("Error with reading the text file");
+            //    }
 
-        //}
+        }
 
         /// <summary>
         /// Tries to connect with the server (error message if not connected properly) and tries it after a period of time again
@@ -120,8 +120,8 @@ namespace HeyMessenger
         /// <param name="client"></param>
         private void Connect(TcpClient client)
         {
-            //do
-            //{
+            do
+            {
                 try
                 {
                     Thread.Sleep(30000);          
@@ -135,8 +135,8 @@ namespace HeyMessenger
                     connection = false;
                 }
 
-            //} 
-            //while (connection == false);
+            }
+            while (connection == false);
         }
 
         private void textBoxMessage_TextChanged(object sender, EventArgs e)
