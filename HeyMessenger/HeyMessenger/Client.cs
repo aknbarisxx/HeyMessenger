@@ -8,7 +8,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.IO;
 
-namespace HeyMessenger
+namespace HeyMessenger //Versuchsklasse
 {
     public class Client
     {
@@ -39,9 +39,9 @@ namespace HeyMessenger
             ChatClient.Connect(EndPoint);
             Reader = new StreamReader(ChatClient.GetStream());
             Writer = new StreamWriter(ChatClient.GetStream());
-            // ReceiveThread = new Thread(Receive);
-            //ReceiveThread.IsBackground = true;
-            //ReceiveThread.Start();
+            ReceiveThread = new Thread(Receive);
+            ReceiveThread.IsBackground = true;
+            ReceiveThread.Start();
         }
 
         /// <summary>
@@ -49,18 +49,18 @@ namespace HeyMessenger
         /// </summary>
         public void ConnectSocket()
         {
-            //IPAddress address = IPAddress.Parse("127.0.0.1");
-            //IPEndPoint EndPointSocket = new IPEndPoint(address, 3443);
+            IPAddress address = IPAddress.Parse("127.0.0.1");
+            IPEndPoint EndPointSocket = new IPEndPoint(address, 3443);
 
-            //Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            //socket.Connect(EndPointSocket);
+            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            socket.Connect(EndPointSocket);
         }
 
         public void Close()
         {
-            //ReceiveThread.Abort();
-            //Writer.Close();
-            //Reader.Close();
+            ReceiveThread.Abort();
+            Writer.Close();
+            Reader.Close();
 
         }
 
