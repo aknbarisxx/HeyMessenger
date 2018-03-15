@@ -92,27 +92,27 @@ namespace HeyMessenger
         /// <summary>
         /// Read text file
         /// </summary>
-        //private void Reader()
-        //{
-        //    try
-        //    {
-        //        using (StreamReader sr = new StreamReader("ServerIPAddress.txt")) ;
-        //        {
-        //            string line;
+        private void Reader()
+        {
+            //    try
+            //    {
+            //        using (StreamReader sr = new StreamReader("ServerIPAddress.txt")) ;
+            //        {
+            //            string line;
 
-        //            while ((line = sr.Readline()) != null)
-        //            {
-        //                sr.Readline();
-        //            }
+            //            while ((line = sr.Readline()) != null)
+            //            {
+            //                sr.Readline();
+            //            }
 
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        MessageBox.Show("Error with reading the text file");
-        //    }
+            //        }
+            //    }
+            //    catch (Exception)
+            //    {
+            //        MessageBox.Show("Error with reading the text file");
+            //    }
 
-        //}
+        }
 
 
 
