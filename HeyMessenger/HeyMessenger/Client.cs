@@ -55,7 +55,6 @@ namespace HeyMessenger //Versuchsklasse
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             socket.Connect(EndPointSocket);
         }
-
         public void Close()
         {
             ReceiveThread.Abort();
