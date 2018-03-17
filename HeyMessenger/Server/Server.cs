@@ -64,7 +64,7 @@ namespace Server
             }
         }
 
-            public static void broadcast(string msg, string uName, bool flag) //Broadcast Funktion
+            public static void broadcast(string msg, string uName, bool flag) //Broadcast Funktion, müsste klappen wenn das Client es auch unterstützt
         {
             
             foreach (DictionaryEntry Item in clientsList)
@@ -72,10 +72,10 @@ namespace Server
                 
                 TcpClient broadcastSocket; //TCPClient für Broadcast
                 broadcastSocket = (TcpClient)Item.Value;
-                NetworkStream broadcastStream = broadcastSocket.GetStream();
+                NetworkStream broadcastStream = broadcastSocket.GetStream(); //für Stream
                 Byte[] broadcastBytes = null;
                 
-                if (flag == true) //Übertragung
+                if (flag == true) //Übertragung der Bytes
                 {
                     broadcastBytes = Encoding.ASCII.GetBytes(uName + " says : " + msg);
                 }
