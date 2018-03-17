@@ -15,7 +15,7 @@ namespace Server
         static void Main(string[] args)
         {
             IPAddress ip = Dns.GetHostEntry("localhost").AddressList[0];
-            TcpListener server = new TcpListener(ip, 8888);
+            TcpListener server = new TcpListener(IPAddress.Loopback, 4334);
             TcpClient client = default(TcpClient);
 
             try
@@ -23,13 +23,12 @@ namespace Server
                 //Thread.Sleep(30000);
                 server.Start();
                 Console.WriteLine("Server gestartet...");
-                Console.Read();
+                //Console.Read();
             }
             catch(Exception ex)
             {
-                //Console.WriteLine(ex.ToString());
-                //Console.Read();
-                throw;
+                Console.WriteLine(ex.ToString());
+               // Console.Read();
             }
             while(true)
             {
@@ -40,10 +39,18 @@ namespace Server
 
                 stream.Read(receivedBuffer, 0, receivedBuffer.Length);
 
-                string msg = Encoding.ASCII.GetString(receivedBuffer, 0, receivedBuffer.Length);  //Konvertierung Bytes zu String
+                StringBuilder msg = new StringBuilder();
 
-                Console.WriteLine(msg + receivedBuffer.Length);
-                Console.Read();
+                foreach (byte b in receivedBuffer)
+                {
+                    if (b.Equals(59))
+                    {
+                        break;
+                    }
+                    else
+                        msg.Append(Convert.ToChar(b).ToString());
+                }
+                Console.WriteLine(msg.ToString()+ receivedBuffer.Length);
                 
             }
         }
